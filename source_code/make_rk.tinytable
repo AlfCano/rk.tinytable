@@ -1,0 +1,236 @@
+local({
+  # =========================================================================================
+  # 1. Package Definition and Metadata
+  # =========================================================================================
+  require(rkwarddev)
+  rkwarddev.required("0.10-3")
+
+  package_about <- rk.XML.about(
+    name = "rk.tinytable",
+    author = person(
+      given = "Alfonso",
+      family = "Cano",
+      email = "alfonso.cano@correo.buap.mx",
+      role = c("aut", "cre")
+    ),
+    about = list(
+      desc = "A powerful GUI for the tinytable package. Create, format, style, and export beautiful, publication-ready tables with zero code.",
+      version = "0.0.1",
+      url = "https://alfcano.r-universe.dev",
+      license = "GPL (>= 3)"
+    )
+  )
+
+  h_tables <- list("analysis", "Tables (tinytable)")
+
+  # JS Helpers
+  js_helpers <- "
+    function cleanStr(val) {
+        if(!val) return '';
+        return val.replace(/'/g, \"\\\\'\").replace(/\"/g, '\\\\\"');
+    }
+    function getCol(id) {
+        var raw = getValue(id);
+        if (!raw) return '';
+        var parts = raw.split(/[\\$\\[\\]]/).filter(Boolean);
+        return parts[parts.length - 1].replace(/[\"']/g, '');
+    }
+  "
+
+  # =========================================================================================
+  # 2. UI Components
+  # =========================================================================================
+  help_tt <- rk.rkh.doc(
+      title = rk.rkh.title("Create a tinytable"),
+      summary = rk.rkh.summary("Converts a data.frame into a highly customizable, publication-ready table using the tinytable package.")
+  )
+
+  t_vs <- rk.XML.varselector(id.name = "t_vs")
+  t_df <- rk.XML.varslot("Data Frame", source = "t_vs", classes = "data.frame", required = TRUE, id.name = "t_df")
+
+  # Auto-focus logic for standard dataframes
+  t_logic <- rk.XML.logic(rk.XML.connect(governor = t_df, get = "available", client = t_vs, set = "root"))
+
+  # --- TAB 1: Data & Content ---
+  t_caption <- rk.XML.input("Table Caption (Title)", id.name = "t_caption")
+  t_notes <- rk.XML.input("Table Notes (Footer)", id.name = "t_notes")
+  t_width <- rk.XML.spinbox("Table Width (Proportion 0.1 to 1.0, 0 = Auto)", min = 0, max = 1, initial = 0, real = TRUE, id.name = "t_width")
+
+  # --- TAB 2: Formatting (format_tt) ---
+  t_digits <- rk.XML.spinbox("Decimals (Digits)", min = 0, max = 10, initial = 2, id.name = "t_digits")
+  t_na <- rk.XML.input("Replace Missing Values (NA) with:", id.name = "t_na")
+  t_num_fmt <- rk.XML.dropdown("Numeric Format", options = list(
+      "Default" = list(val = "default", chk = TRUE),
+      "Scientific" = list(val = "scientific"),
+      "Percentage" = list(val = "pct")
+  ), id.name = "t_num_fmt")
+
+  # --- TAB 3: Themes & Styling (theme_tt & style_tt) ---
+  t_theme <- rk.XML.dropdown("Table Theme", options = list(
+      "Default" = list(val = "default", chk = TRUE),
+      "Striped" = list(val = "striped"),
+      "Grid" = list(val = "grid"),
+      "Void (No borders)" = list(val = "void"),
+      "Classic" = list(val = "classic"),
+      "Minimal" = list(val = "minimal"),
+      "Bootstrap" = list(val = "bootstrap"),
+      "Tabular" = list(val = "tabular")
+  ), id.name = "t_theme")
+
+  t_align <- rk.XML.dropdown("Global Text Alignment", options = list(
+      "Auto" = list(val = "auto", chk = TRUE),
+      "Center (c)" = list(val = "c"),
+      "Left (l)" = list(val = "l"),
+      "Right (r)" = list(val = "r")
+  ), id.name = "t_align")
+
+  t_fontsize <- rk.XML.spinbox("Font Size (px, 0 = Auto)", min = 0, max = 72, initial = 0, id.name = "t_fontsize")
+
+  # --- TAB 4: Export ---
+  t_save <- rk.XML.saveobj("Save Table Object to Workspace", initial = "my_table", chk = FALSE, id.name = "t_save")
+  t_export <- rk.XML.browser("Export as File (Optional)", type = "savefile", required = FALSE, id.name = "t_export")
+  t_export_fmt <- rk.XML.dropdown("Export Format", options = list(
+      "HTML (.html)" = list(val = "html", chk = TRUE),
+      "Word (.docx)" = list(val = "docx"),
+      "PDF (.pdf)" = list(val = "pdf"),
+      "PNG Image (.png)" = list(val = "png"),
+      "Markdown (.md)" = list(val = "md"),
+      "LaTeX (.tex)" = list(val = "tex"),
+      "Typst (.typ)" = list(val = "typst")
+  ), id.name = "t_export_fmt")
+
+  dialog_tt <- rk.XML.dialog(label = "Create tinytable", child = rk.XML.row(
+      t_vs,
+      rk.XML.col(
+        rk.XML.tabbook(tabs = list(
+            "Data & Content" = rk.XML.col(t_df, t_caption, t_notes, t_width, rk.XML.stretch()),
+            "Formatting" = rk.XML.col(t_digits, t_na, t_num_fmt, rk.XML.stretch()),
+            "Theme & Styling" = rk.XML.col(t_theme, t_align, t_fontsize, rk.XML.stretch()),
+            "Export" = rk.XML.col(t_save, rk.XML.frame(t_export, t_export_fmt, label = "Save to Disk"), rk.XML.stretch())
+        )),
+        rk.XML.preview(id.name = "t_preview")
+      )
+  ))
+
+  # =========================================================================================
+  # 3. JavaScript Logic
+  # =========================================================================================
+  js_calc_tt <- paste0(js_helpers, "
+    var df = getValue('t_df');
+    var cap = cleanStr(getValue('t_caption'));
+    var not = cleanStr(getValue('t_notes'));
+    var w = getValue('t_width');
+
+    var dig = getValue('t_digits');
+    var rpl = cleanStr(getValue('t_na'));
+    var num_fmt = getValue('t_num_fmt');
+
+    var theme = getValue('t_theme');
+    var align = getValue('t_align');
+    var fs = getValue('t_fontsize');
+
+    var exp_file = cleanStr(getValue('t_export')).replace(/\\\\/g, '/');
+    var exp_fmt = getValue('t_export_fmt');
+
+    echo('require(tinytable)\\nrequire(dplyr)\\n\\n');
+
+    // 1. Base creation: tt()
+    var tt_args = [];
+    if (cap !== '') tt_args.push(\"caption = '\" + cap + \"'\");
+    if (not !== '') tt_args.push(\"notes = '\" + not + \"'\");
+    if (w > 0) tt_args.push(\"width = \" + w);
+
+    var base_cmd = 'tinytable::tt(' + df;
+    if (tt_args.length > 0) {
+        base_cmd += ', ' + tt_args.join(', ');
+    }
+    base_cmd += ')';
+
+    echo('res_table <- ' + base_cmd + '\\n');
+
+    // 2. Formatting: format_tt()
+    var fmt_args = [];
+    if (rpl !== '') fmt_args.push(\"replace = '\" + rpl + \"'\");
+    if (num_fmt === 'scientific') fmt_args.push(\"num_fmt = 'scientific'\");
+    if (num_fmt === 'pct') fmt_args.push(\"num_fmt = 'pct'\");
+
+    // Always pass digits unless format dictates otherwise
+    fmt_args.push(\"digits = \" + dig);
+
+    if (fmt_args.length > 0) {
+        echo('  %>% tinytable::format_tt(' + fmt_args.join(', ') + ')\\n');
+    }
+
+    // 3. Theme: theme_tt()
+    if (theme !== 'default') {
+        echo('  %>% tinytable::theme_tt(\"' + theme + '\")\\n');
+    }
+
+    // 4. Styling: style_tt()
+    var stl_args = [];
+    if (align !== 'auto') stl_args.push(\"align = '\" + align + \"'\");
+    if (fs > 0) stl_args.push(\"fontsize = \" + fs);
+
+    if (stl_args.length > 0) {
+        echo('  %>% tinytable::style_tt(' + stl_args.join(', ') + ')\\n');
+    }
+
+    echo('\\n');
+
+    // 5. Saving to Workspace
+    if (getValue('t_save.active')) {
+        echo(getValue('t_save') + ' <- res_table\\n');
+    }
+
+    // 6. Exporting to Disk
+    if (exp_file !== '') {
+        echo('\\n# Export to disk\\n');
+        // Smart extension appending
+        echo('out_file <- \"' + exp_file + '\"\\n');
+        echo('if (!grepl(paste0(\"\\\\\\\\.\", \"' + exp_fmt + '\", \"$\"), out_file, ignore.case = TRUE)) {\\n');
+        echo('  out_file <- paste0(out_file, \".\", \"' + exp_fmt + '\")\\n');
+        echo('}\\n');
+        echo('tinytable::save_tt(res_table, out_file)\\n');
+    }
+  ")
+
+  js_print_tt <- "
+    if (!is_preview) {
+        echo('rk.header(\"tinytable Output\", level = 2)\\n');
+        if (getValue('t_save.active')) {
+            echo('rk.print(\"<i>Table saved to workspace as: </i><code>' + getValue('t_save') + '</code>\")\\n');
+        }
+        var exp = getValue('t_export');
+        if (exp !== '') {
+            var safe_exp = exp.replace(/\\\\/g, '/');
+            echo('rk.print(paste0(\"<i>Table exported to disk: </i><code>\", out_file, \"</code>\"))\\n');
+        }
+        echo('rk.print(\"<hr>\")\\n');
+    }
+
+    // Print the table object so it renders in RKWard HTML output
+    echo('print(res_table, \"html\")\\n');
+  "
+
+  comp_tt <- rk.plugin.component(
+      "Create tinytable",
+      xml = list(dialog = dialog_tt, logic = t_logic),
+      js = list(require = c("tinytable", "dplyr"), calculate = js_calc_tt, printout = js_print_tt),
+      hierarchy = h_tables,
+      rkh = list(help = help_tt)
+  )
+
+  # =========================================================================================
+  # 4. BUILD SKELETON
+  # =========================================================================================
+  rk.plugin.skeleton(
+    about = package_about,
+    path = ".",
+    components = list(comp_tt),
+    pluginmap = list(name = "tinytable", hierarchy = list("analysis")),
+    create = c("pmap", "xml", "js", "desc", "rkh"),
+    load = TRUE, overwrite = TRUE, show = FALSE
+  )
+
+  cat("\nPlugin package 'rk.tinytable' generated successfully.\n")
+})

@@ -1,0 +1,18 @@
+Package: rk.tinytable
+Type: Package
+Title: A powerful GUI for the tinytable package. Create, format, style,
+        and export beautiful, publication-ready tables with zero code.
+Version: 0.0.1
+Date: 2026-10-20
+Author: Alfonso Cano
+Maintainer: Alfonso Cano <alfonso.cano@correo.buap.mx>
+Enhances: rkward
+Description: A powerful GUI for the tinytable package. Create, format,
+        style, and export beautiful, publication-ready tables with zero
+        code.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyLoad: yes
+URL: https://alfcano.r-universe.dev
+Authors@R: person(given="Alfonso", family="Cano",
+        email="alfonso.cano@correo.buap.mx", role=c("aut", "cre"))

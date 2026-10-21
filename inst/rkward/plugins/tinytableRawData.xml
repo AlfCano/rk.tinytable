@@ -1,0 +1,99 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="tinytableRawData.js" />
+	<help file="tinytableRawData.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<connect governor="raw_df.available" client="raw_vs.root" />
+	</logic>
+	<dialog label="tinytable (Raw Data)">
+		<column id="clm_rDFDFSDSDD">
+			<row id="row_vDFDFSDSDD">
+				<varselector id="raw_vs" />
+				<column id="clm_tDFDFSDSDD">
+					<tabbook>
+						<tab label="Data &amp; Filtering" id="tab_DtFltrng">
+							<column id="clm_fSDSDDFFS1">
+								<frame label="Source Data" id="frm_SourceDt">
+									<varslot id="raw_df" label="Data Frame" source="raw_vs" classes="data.frame" required="true" />
+									<input label="Filter rows (Subset expression, e.g., age &gt; 18)" id="raw_sub" />
+									<checkbox id="raw_drop_na" label="Drop rows with missing values (tidyr::drop_na)" value="1" />
+								</frame>
+								<frame label="Selection &amp; Pre-processing" id="frm_SlctnPrp">
+									<varslot id="raw_vars" label="Variables to include (Leave blank for all)" source="raw_vs" multi="true" />
+									<checkbox id="raw_agg" label="Aggregate data: Calculate Means of numeric columns" value="1" />
+									<spinbox label="Show only top N rows (0 = Show All)" id="raw_head" min="0" max="1e+05" type="integer" />
+								</frame>
+								<stretch />
+							</column>
+						</tab>
+						<tab label="Table Content" id="tab_TblCntnt">
+							<column id="clm_iTCTTNFTWP">
+								<input label="Table Caption (Title)" id="raw_cap" />
+								<input label="Table Notes (Footer)" id="raw_not" />
+								<spinbox label="Table Width (Proportion 0.1 to 1.0, 0 = Auto)" id="raw_w" min="0" max="1" />
+								<stretch />
+							</column>
+						</tab>
+						<tab label="Formatting" id="tab_Formttng">
+							<column id="clm_sDD2010RMV">
+								<spinbox label="Decimals (Digits)" id="raw_dig" initial="2" min="0" max="10" />
+								<input label="Replace Missing Values (NA) with:" id="raw_na" />
+								<dropdown id="raw_num" label="Numeric Format">
+									<option label="Default" value="default" checked="true" />
+									<option label="Scientific" value="scientific" />
+									<option label="Percentage" value="pct" />
+								</dropdown>
+								<stretch />
+							</column>
+						</tab>
+						<tab label="Theme &amp; Styling" id="tab_ThmStyln">
+							<column id="clm_dTTDSGENGT">
+								<dropdown id="raw_thm" label="Table Theme">
+									<option label="Default" value="default" checked="true" />
+									<option label="Striped" value="striped" />
+									<option label="Grid" value="grid" />
+									<option label="Empty (No borders)" value="empty" />
+								</dropdown>
+								<dropdown id="raw_aln" label="Global Text Alignment">
+									<option label="Auto" value="auto" checked="true" />
+									<option label="Center (c)" value="c" />
+									<option label="Left (l)" value="l" />
+									<option label="Right (r)" value="r" />
+								</dropdown>
+								<spinbox label="Font Size (px, 0 = Auto)" id="raw_fs" min="0" max="72" />
+								<stretch />
+							</column>
+						</tab>
+						<tab label="Export" id="tab_Export">
+							<column id="clm_sSTOWSDSDE">
+								<saveobject label="Save Table Object to Workspace" checkable="true" initial="my_table" id="raw_save" />
+								<frame label="Save to Disk" id="frm_SavetDsk">
+									<browser label="Export as File (Optional)" type="savefile" id="raw_exp" required="false" />
+									<dropdown id="raw_efmt" label="Export Format">
+										<option label="HTML (.html)" value="html" checked="true" />
+										<option label="Word (.docx)" value="docx" />
+										<option label="PDF (.pdf)" value="pdf" />
+										<option label="PNG Image (.png)" value="png" />
+										<option label="Markdown (.md)" value="md" />
+										<option label="LaTeX (.tex)" value="tex" />
+										<option label="Typst (.typ)" value="typst" />
+									</dropdown>
+								</frame>
+								<stretch />
+							</column>
+						</tab>
+					</tabbook>
+				</column>
+			</row>
+			<preview label="Preview HTML Table" mode="output" />
+		</column>
+	</dialog>
+</document>

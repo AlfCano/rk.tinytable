@@ -1,0 +1,82 @@
+<!DOCTYPE rkhelp >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<summary>
+	</summary>
+	<usage>
+	</usage>
+	<!--
+		<section id="sct_EDITORDE" title="EDIT OR DELETE ME">
+			EDIT OR DELETE ME
+		</section>
+	-->
+	<settings>
+		<caption id="tab_DataLayt" />
+		<caption id="frm_SourceDt" />
+		<setting id="xtab_df">
+		</setting>
+		<setting id="xtab_sub">
+		</setting>
+		<setting id="xtab_drop_na">
+		</setting>
+		<caption id="frm_CrssTblO" />
+		<setting id="xtab_rows">
+		</setting>
+		<setting id="xtab_cols">
+		</setting>
+		<setting id="xtab_bin">
+		</setting>
+		<caption id="frm_MsrmntTt" />
+		<setting id="xtab_val">
+		</setting>
+		<setting id="xtab_stat">
+		</setting>
+		<setting id="xtab_tot_col">
+		</setting>
+		<setting id="xtab_tot_row">
+		</setting>
+		<caption id="tab_TblCntnt" />
+		<setting id="xtab_cap">
+		</setting>
+		<setting id="xtab_not">
+		</setting>
+		<setting id="xtab_w">
+		</setting>
+		<caption id="tab_Formttng" />
+		<setting id="xtab_dig">
+		</setting>
+		<setting id="xtab_na">
+		</setting>
+		<setting id="xtab_num">
+		</setting>
+		<caption id="tab_ThmStyln" />
+		<setting id="xtab_thm">
+		</setting>
+		<setting id="xtab_aln">
+		</setting>
+		<setting id="xtab_fs">
+		</setting>
+		<caption id="tab_Export" />
+		<setting id="xtab_save">
+		</setting>
+		<caption id="frm_SavetDsk" />
+		<setting id="xtab_exp">
+		</setting>
+		<setting id="xtab_efmt">
+		</setting>
+	</settings>
+	<!--
+		<related>
+			<ul>
+				<li>
+					<link href="rkward://rhelp/..." />
+				</li>
+			</ul>
+		</related>
+	-->
+	<technical>
+	</technical>
+</document>

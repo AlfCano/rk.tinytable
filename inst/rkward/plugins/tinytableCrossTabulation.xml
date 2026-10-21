@@ -1,0 +1,111 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<code file="tinytableCrossTabulation.js" />
+	<help file="tinytableCrossTabulation.rkh" />
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<logic>
+		<connect governor="xtab_df.available" client="xtab_vs.root" />
+	</logic>
+	<dialog label="tinytable (Cross-Tabulation)">
+		<column id="clm_rDLDLSDSDD">
+			<row id="row_vDLDLSDSDD">
+				<varselector id="xtab_vs" />
+				<column id="clm_tDLDLSDSDD">
+					<tabbook>
+						<tab label="Data &amp; Layout" id="tab_DataLayt">
+							<column id="clm_fSDSDDFFS1">
+								<frame label="Source Data" id="frm_SourceDt">
+									<varslot id="xtab_df" label="Data Frame" source="xtab_vs" classes="data.frame" required="true" />
+									<input label="Filter rows (Subset expression, e.g., age &gt; 18)" id="xtab_sub" />
+									<checkbox id="xtab_drop_na" label="Drop rows with missing values (tidyr::drop_na)" value="1" />
+								</frame>
+								<row id="row_fCTOCTORVC">
+									<frame label="Cross-Tabulation Options" id="frm_CrssTblO">
+										<varslot id="xtab_rows" label="Row Variable(s)" source="xtab_vs" required="true" multi="true" />
+										<varslot id="xtab_cols" label="Column Variable(s)" source="xtab_vs" multi="true" />
+										<checkbox id="xtab_bin" label="Bin numeric row/col variables into ranges (Sturges rule)" value="1" checked="true" />
+									</frame>
+									<frame label="Measurement &amp; Totals" id="frm_MsrmntTt">
+										<varslot id="xtab_val" label="Value Variable to Aggregate (Optional, Numeric)" source="xtab_vs" classes="numeric integer" />
+										<dropdown id="xtab_stat" label="Statistic to calculate">
+											<option label="Count (Frequencies / N)" value="count" checked="true" />
+											<option label="Mean" value="mean" />
+											<option label="Sum" value="sum" />
+										</dropdown>
+										<checkbox id="xtab_tot_col" label="Add Column Totals (Bottom Row - Skips if Mean)" value="1" />
+										<checkbox id="xtab_tot_row" label="Add Row Totals (Right Column - Skips if Mean)" value="1" />
+									</frame>
+								</row>
+								<stretch />
+							</column>
+						</tab>
+						<tab label="Table Content" id="tab_TblCntnt">
+							<column id="clm_iTCTTNFTWP">
+								<input label="Table Caption (Title)" id="xtab_cap" />
+								<input label="Table Notes (Footer)" id="xtab_not" />
+								<spinbox label="Table Width (Proportion 0.1 to 1.0, 0 = Auto)" id="xtab_w" min="0" max="1" />
+								<stretch />
+							</column>
+						</tab>
+						<tab label="Formatting" id="tab_Formttng">
+							<column id="clm_sDD2010RMV">
+								<spinbox label="Decimals (Digits)" id="xtab_dig" initial="2" min="0" max="10" />
+								<input label="Replace Missing Values (NA) with:" id="xtab_na" />
+								<dropdown id="xtab_num" label="Numeric Format">
+									<option label="Default" value="default" checked="true" />
+									<option label="Scientific" value="scientific" />
+									<option label="Percentage" value="pct" />
+								</dropdown>
+								<stretch />
+							</column>
+						</tab>
+						<tab label="Theme &amp; Styling" id="tab_ThmStyln">
+							<column id="clm_dTTDSGENGT">
+								<dropdown id="xtab_thm" label="Table Theme">
+									<option label="Default" value="default" checked="true" />
+									<option label="Striped" value="striped" />
+									<option label="Grid" value="grid" />
+									<option label="Empty (No borders)" value="empty" />
+								</dropdown>
+								<dropdown id="xtab_aln" label="Global Text Alignment">
+									<option label="Auto" value="auto" checked="true" />
+									<option label="Center (c)" value="c" />
+									<option label="Left (l)" value="l" />
+									<option label="Right (r)" value="r" />
+								</dropdown>
+								<spinbox label="Font Size (px, 0 = Auto)" id="xtab_fs" min="0" max="72" />
+								<stretch />
+							</column>
+						</tab>
+						<tab label="Export" id="tab_Export">
+							<column id="clm_sSTOWSDSDE">
+								<saveobject label="Save Table Object to Workspace" checkable="true" initial="my_table" id="xtab_save" />
+								<frame label="Save to Disk" id="frm_SavetDsk">
+									<browser label="Export as File (Optional)" type="savefile" id="xtab_exp" required="false" />
+									<dropdown id="xtab_efmt" label="Export Format">
+										<option label="HTML (.html)" value="html" checked="true" />
+										<option label="Word (.docx)" value="docx" />
+										<option label="PDF (.pdf)" value="pdf" />
+										<option label="PNG Image (.png)" value="png" />
+										<option label="Markdown (.md)" value="md" />
+										<option label="LaTeX (.tex)" value="tex" />
+										<option label="Typst (.typ)" value="typst" />
+									</dropdown>
+								</frame>
+								<stretch />
+							</column>
+						</tab>
+					</tabbook>
+				</column>
+			</row>
+			<preview label="Preview HTML Table" mode="output" />
+		</column>
+	</dialog>
+</document>

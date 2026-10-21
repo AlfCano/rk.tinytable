@@ -1,0 +1,192 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: rk.tinytable 0.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-19 14:00-0600\n"
+"PO-Revision-Date: 2026-10-19 14:00-0600\n"
+"Last-Translator: Alfonso Cano <alfonso.cano@correo.buap.mx>\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Table Caption (Title)"
+msgstr "Tabellenbeschriftung (Titel)"
+
+msgid "Table Notes (Footer)"
+msgstr "Tabellennotizen (Fußzeile)"
+
+msgid "Table Width (Proportion 0.1 to 1.0, 0 = Auto)"
+msgstr "Tabellenbreite (Anteil 0.1 bis 1.0, 0 = Auto)"
+
+msgid "Decimals (Digits)"
+msgstr "Dezimalstellen (Ziffern)"
+
+msgid "Replace Missing Values (NA) with:"
+msgstr "Fehlende Werte (NA) ersetzen durch:"
+
+msgid "Numeric Format"
+msgstr "Numerisches Format"
+
+msgid "Default"
+msgstr "Standard"
+
+msgid "Scientific"
+msgstr "Wissenschaftlich"
+
+msgid "Percentage"
+msgstr "Prozentsatz"
+
+msgid "Table Theme"
+msgstr "Tabellendesign"
+
+msgid "Striped"
+msgstr "Gestreift"
+
+msgid "Grid"
+msgstr "Raster"
+
+msgid "Empty (No borders)"
+msgstr "Leer (Keine Ränder)"
+
+msgid "Global Text Alignment"
+msgstr "Globale Textausrichtung"
+
+msgid "Auto"
+msgstr "Auto"
+
+msgid "Center (c)"
+msgstr "Zentriert (c)"
+
+msgid "Left (l)"
+msgstr "Links (l)"
+
+msgid "Right (r)"
+msgstr "Rechts (r)"
+
+msgid "Font Size (px, 0 = Auto)"
+msgstr "Schriftgröße (px, 0 = Auto)"
+
+msgid "Save Table Object to Workspace"
+msgstr "Tabellenobjekt im Arbeitsbereich speichern"
+
+msgid "Export as File (Optional)"
+msgstr "Als Datei exportieren (Optional)"
+
+msgid "Export Format"
+msgstr "Exportformat"
+
+msgid "HTML (.html)"
+msgstr "HTML (.html)"
+
+msgid "Word (.docx)"
+msgstr "Word (.docx)"
+
+msgid "PDF (.pdf)"
+msgstr "PDF (.pdf)"
+
+msgid "PNG Image (.png)"
+msgstr "PNG-Bild (.png)"
+
+msgid "Markdown (.md)"
+msgstr "Markdown (.md)"
+
+msgid "LaTeX (.tex)"
+msgstr "LaTeX (.tex)"
+
+msgid "Typst (.typ)"
+msgstr "Typst (.typ)"
+
+msgid "Save to Disk"
+msgstr "Auf Festplatte speichern"
+
+msgid "Data & Layout"
+msgstr "Daten & Layout"
+
+msgid "Data & Filtering"
+msgstr "Daten & Filterung"
+
+msgid "Table Content"
+msgstr "Tabelleninhalt"
+
+msgid "Formatting"
+msgstr "Formatierung"
+
+msgid "Theme & Styling"
+msgstr "Design & Styling"
+
+msgid "Export"
+msgstr "Exportieren"
+
+msgid "Preview HTML Table"
+msgstr "Vorschau HTML-Tabelle"
+
+msgid "Source Data"
+msgstr "Quelldaten"
+
+msgid "tinytable (Cross-Tabulation)"
+msgstr "tinytable (Kreuztabelle)"
+
+msgid "Data Frame"
+msgstr "Datenrahmen (Data Frame)"
+
+msgid "Filter rows (Subset expression, e.g., age > 18)"
+msgstr "Zeilen filtern (Teilmenge, z. B. age > 18)"
+
+msgid "Drop rows with missing values (tidyr::drop_na)"
+msgstr "Zeilen mit fehlenden Werten verwerfen (tidyr::drop_na)"
+
+msgid "Row Variable(s)"
+msgstr "Zeilenvariable(n)"
+
+msgid "Column Variable(s)"
+msgstr "Spaltenvariable(n)"
+
+msgid "Bin numeric row/col variables into ranges (Sturges rule)"
+msgstr "Numerische Zeilen-/Spaltenvariablen in Bereiche einteilen (Sturges-Regel)"
+
+msgid "Value Variable to Aggregate (Optional, Numeric)"
+msgstr "Zu aggregierende Wertvariable (Optional, numerisch)"
+
+msgid "Statistic to calculate"
+msgstr "Zu berechnende Statistik"
+
+msgid "Count (Frequencies / N)"
+msgstr "Anzahl (Häufigkeiten / N)"
+
+msgid "Mean"
+msgstr "Mittelwert"
+
+msgid "Sum"
+msgstr "Summe"
+
+msgid "Cross-Tabulation Options"
+msgstr "Optionen für Kreuztabellen"
+
+msgid "Measurement (Intersection)"
+msgstr "Messung (Schnittpunkt)"
+
+msgid "tinytable (Raw Data)"
+msgstr "tinytable (Rohdaten)"
+
+msgid "Variables to include (Leave blank for all)"
+msgstr "Einzuschließende Variablen (Für alle leer lassen)"
+
+msgid "Show only top N rows (0 = Show All)"
+msgstr "Nur die ersten N Zeilen anzeigen (0 = Alle anzeigen)"
+
+msgid "Aggregate data: Calculate Means of numeric columns"
+msgstr "Daten aggregieren: Mittelwerte numerischer Spalten berechnen"
+
+msgid "Selection & Pre-processing"
+msgstr "Auswahl & Vorverarbeitung"
+
+msgid "Add Column Totals (Bottom Row - Skips if Mean)"
+msgstr "Spaltensummen hinzufügen (Untere Zeile - Übersprungen bei Mittelwert)"
+
+msgid "Add Row Totals (Right Column - Skips if Mean)"
+msgstr "Zeilensummen hinzufügen (Rechte Spalte - Übersprungen bei Mittelwert)"
+
+msgid "Measurement & Totals"
+msgstr "Messung & Summen"

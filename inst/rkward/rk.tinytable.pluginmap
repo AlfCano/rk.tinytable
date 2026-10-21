@@ -1,0 +1,97 @@
+<!DOCTYPE
+	rkpluginmap
+>
+<document
+	base_prefix=""
+	namespace="tinytableRawData"
+	id="tinytableRawData_rkward"
+	po_id="tinytableRawData_rkward"
+	priority="medium"
+>
+	<!--
+		this code was generated using the rkwarddev package.
+	perhaps don't make changes here, but in the rkwarddev script instead!
+	-->
+	<!--
+		<dependencies>
+		</dependencies>
+	-->
+	<about
+		name="rk.tinytable"
+		shortinfo="A powerful GUI for the tinytable package. Create, format, style, and export beautiful, publication-ready tables with zero code."
+		longinfo="A powerful GUI for the tinytable package. Create, format, style, and export beautiful, publication-ready tables with zero code."
+		version="0.0.1"
+		releasedate="2026-10-20"
+		url="https://alfcano.r-universe.dev"
+		license="GPL (&gt;= 3)"
+	>
+		<author
+			given="Alfonso"
+			family="Cano"
+			email="alfonso.cano@correo.buap.mx"
+			role="aut, cre"
+		/>
+	</about>
+	<require
+		map="rkward::menu"
+	/>
+	<require
+		map="rkward::embedded"
+	/>
+	<components>
+		<component
+			id="cmp_tnytblRwDttnytblCrssTbltn"
+			label="tinytable (Cross-Tabulation)"
+			type="standard"
+			file="plugins/tinytableCrossTabulation.xml"
+		>
+		</component>
+		<component
+			id="cmp_tinytableRawDattnytblRwDt"
+			label="tinytable (Raw Data)"
+			type="standard"
+			file="plugins/tinytableRawData.xml"
+		>
+		</component>
+	</components>
+	<hierarchy>
+		<menu
+			id="analysis"
+			label="Analysis"
+		>
+			<menu
+				id="Tablestinytable"
+				label="Tables (tinytable)"
+			>
+				<entry
+					component="cmp_tnytblRwDttnytblCrssTbltn"
+				/>
+			</menu>
+		</menu>
+		<menu
+			id="analysis"
+			label="Analysis"
+		>
+			<menu
+				id="Tablestinytable"
+				label="Tables (tinytable)"
+			>
+				<entry
+					component="cmp_tinytableRawDattnytblRwDt"
+				/>
+			</menu>
+		</menu>
+	</hierarchy>
+	<!--
+		<context
+			id="x11"
+		>
+		</context>
+	-->
+	<!--
+		<context
+			id="import"
+		>
+		</context>
+	-->
+</document>
